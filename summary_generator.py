@@ -1,26 +1,18 @@
-import openai
+# main.py
 import os
-from dotenv import load_dotenv
+from openai_module.openai_summary import get_summary_openai
+from transformers_module.transformers_summary import get_summary_transformers
 
+# Define configuration for model usage (switch between 'openai' and 'transformers')
+MODE = "transformers"  # Change to "openai" to use OpenAI API
 
-model = "gpt-3.5-turbo"
-
-# Load OpenAI API key from .env file
-load_dotenv()
-openai.api_key = os.getenv("OPENAI_API_KEY")
-
-# Function to get overall book summary using the new OpenAI completions API
 def get_book_summary(book_title):
-    prompt = f"Write an in-depth summary of the book '{book_title}'. Format it as Overview, Key Themes, Key Quotes and Insights, Why This Book Matters, and Conclusion."
-    
-    # Using the new `openai.completions.create` API with the correct parameters
-    response = openai.completions.create(
-        model=model,
-        prompt=prompt,
-        max_tokens=2000
-    )
-    
-    return response['completion']
+    if MODE == "openai":
+        return get_summary_openai(book_title)
+    elif MODE == "transformers":
+        return get_summary_transformers(book_title)
+    else:
+        raise ValueError("Invalid mode selected. Choose either 'openai' or 'transformers'.")
 
 # Function to save the summary as markdown
 def save_summary_as_markdown(book_title, summary):
@@ -37,5 +29,5 @@ def generate_book_summary(book_title):
 
 # Example usage
 if __name__ == "__main__":
-    book_title = "Sample Book"  # Replace with your book title
+    book_title = "The Great Gatsby"  # Replace with your book title
     generate_book_summary(book_title)

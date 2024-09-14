@@ -1,0 +1,1 @@
+The Great Gatsby is one of the most famous books of all time. It was written in the early 1900s by Upton Sinclair. The book is about the life of a young man in New York City in the 1920s. It is considered one of America's greatest novels.
